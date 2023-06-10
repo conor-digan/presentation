@@ -1,0 +1,5 @@
+streamlit
+openai
+stability_sdk
+gtts
+pillow
