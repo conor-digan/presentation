@@ -4,6 +4,7 @@ import openai
 import os
 from presentation.presentation import Presentation
 
+openai.api_key = st.secrets['OPENAI_API_KEY']
 
 st.title('''Step 1: Lets generate your script''')
 
@@ -42,20 +43,20 @@ def get_text():
 
 with st.sidebar.form("Input"):
 
-    api_key_input = st.text_input(
-        "OpenAI API Key",
-        type="password",
-        placeholder="Paste your OpenAI API key here (sk-...)",
-        help="You can get your API key from https://platform.openai.com/account/api-keys.",  # noqa: E501
-        value=st.session_state.get("OPENAI_API_KEY", ""),
-    )
+    # api_key_input = st.text_input(
+    #     "OpenAI API Key",
+    #     type="password",
+    #     placeholder="Paste your OpenAI API key here (sk-...)",
+    #     help="You can get your API key from https://platform.openai.com/account/api-keys.",  # noqa: E501
+    #     value=st.session_state.get("OPENAI_API_KEY", ""),
+    # )
 
-    if api_key_input:
-        st.session_state["api_key_configured"] = True
-        openai.api_key = api_key_input
+    # if api_key_input:
+    #     st.session_state["api_key_configured"] = True
+    #     openai.api_key = api_key_input
 
 
-    st.markdown('----------------')
+    # st.markdown('----------------')
 
     topic = st.text_input(
         label='Presentation Topic:',
@@ -100,19 +101,19 @@ with st.sidebar.form("Input"):
 
 
 if btnResult:
-    if not st.session_state.get("api_key_configured"):
-        st.error("Please configure your OpenAI API key!")
-    else:
-        st.session_state['presentation'].generate_script(topic, audience, length, goal, important_points)
-        script_output.write(st.session_state['presentation'].get_whole_script())
-        
+    # if not st.session_state.get("api_key_configured"):
+    #     st.error("Please configure your OpenAI API key!")
+    # else:
+    st.session_state['presentation'].generate_script(topic, audience, length, goal, important_points)
+    script_output.write(st.session_state['presentation'].get_whole_script())
+    
 
 user_input = get_text()
 
 if user_input:
-    if not st.session_state.get("api_key_configured"):
-        st.error("Please configure your OpenAI API key!")
-    else: 
-        st.session_state['presentation'].update_script(user_input)
-        script_output.write(st.session_state['presentation'].get_whole_script())
+    # if not st.session_state.get("api_key_configured"):
+    #     st.error("Please configure your OpenAI API key!")
+    # else: 
+    st.session_state['presentation'].update_script(user_input)
+    script_output.write(st.session_state['presentation'].get_whole_script())
 
